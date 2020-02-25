@@ -1,2 +1,2 @@
-# PyRSS 
-- CS 3250. Team 4
+## PyRSS 
+Rework of JRSST in python. 
