@@ -1,2 +1,2 @@
 def returnTwo():
-    return 3
+    return 2
