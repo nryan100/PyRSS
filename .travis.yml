@@ -1,7 +1,6 @@
 
 language: python
 python:
-  - "3.7"
   - "3.8"
 cache: pip
 install:
@@ -13,7 +12,7 @@ addons:
   sonarcloud:
     organization: "cs3250team4"
     token:
-      secure: "b5b4carfWnZ2gqpBkHxp4PUPYnjwW5eu4C7HqSNdTsYOYRKvJcMbxpF43c10aDCeT6JYMsYXXZv/NZ7D0bOiPu+r4BXDFo8uCMMQc9q99GigbMO9KApZzkz8Q1HDdduipXGFFaURJY7IY2N1wcO3ZcN6AmK9Gmq/9PvvSsJSiPqyPztUGZeIxxbx/WTYiw+36Y7guDvaioIkV8lZ3IPf+96FF7qbRLyl03QxArQDwk5JrBUG1NhRx6vYf3iXvsdLDurDHXDp/umTOOFjaZPiCdoRjaPIWBl+XxEPQXgMewe289zcJZbR+J5Kw5ninrxDy8SVvPk+B6pm0SmWlbF7QtuqUwMbjnIBoAmHBZ6SjFnPpG/xC2XuL6lGRFiDO4wYxrD3sxR7r4VnRUGQz84M3sOa8G6PG6fyrHbbW/xuCaJBbejGxGAzXLfeHqEW+WYoFELZ+mi2vt99tl+sFC3NWKndKv/PQnd1f/V/+JP5yTBmiBb5MbihSDRo6L8treLezh99DdvHDJUqhf1RaGuso0VKqA/CTkoibIUZVRWNSLiOok6xx61l3H8RF5Y9JBG5IjItrfU+bgL6FfAoEORC0HMibVdgT5oFy+BDo90ngw1VPRMsBOHS/rY1FaF3d+rGyu7+R0y7nXyP9fvHgQypBg9zYI2wuSWnPYBo5DGjyzM="
+      secure: "X8iPREsIPp5/+ObLz0OU1Mu/ZQPZl3sGISABx3iFDjbP505c9n78ehvWxm3b9WwROF0cx1I7xy8mXc1Zd/enthesIwStxufqNtSZ5buYVLGg3JetzFTI9gprmPs+/xY2fFXTnv6H6Iv1HyTRkdrKUYleq0mJPkwDDmqshMeQfrgczz1lydh+I0Es+rebdwtzmCLB6K6l+RqpmU+Wxxr/Uq2mFKhCen+YxupEEr7uhtIAKv/Dvk6I/J9LLiVwWN4jEvvtLdn14Jqm6ZzrHMc78fQvz/KQAbI31z2cojYaDQG1PYv2YQc7ss9oYeS9NIPzGwu8peBJVWU+yaDh+ROH9PmKKUVYITEoZVNIq1BXagMl36eX6FCKiarmJtFyfKNLQS5C9UxbnmgKUbR9+qAtCJjyMZf2yZll3r7pyYQA4gXfpSEh1oopFAHIEfIlK/xFvc6+OC5J0XRhuBULZR2jNqKq9Tam71rcbi2IGt56UEjdGxT7hmmwoMqOTG+IplGc3GB0Ho5zF9pPyZA4WJU32ASWgy/m1CO6I4WIsnOS7yZuWJOPJFdPuiBD/jZCyEa6u5wXgDlKd+gB/I3rqyiGK6mbpQjLYyFOs77M9fGNT+r1PAgOO7CxAW8AGja+MgLu40KxQnQ2hYWtMKl85A/nE2WQyaAKrbHHx/rQGbcpC5A="
 
 script:
   - sonar-scanner
