@@ -1,11 +1,4 @@
 
-language: python
-python:
-  - "3.8"
-cache: pip
-install:
-  - pip install -r requirements.txt
-
 dist: trusty
 
 addons:
@@ -17,6 +10,3 @@ addons:
 script:
   - sonar-scanner
 
-# Uncomment to run tests (no tests yet)
-#script:
-#  - pytest
