@@ -41,7 +41,7 @@ while True:
     changeTime = 2 # maybe a def to return this so we can call it from view class (unless
     time.strftime("%c")
     try:
-        print (f'{i}  {title[i]}')
+        print(f'{i}  {title[i]}')
         i += 1
         time.sleep(.5)
 
