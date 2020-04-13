@@ -11,7 +11,6 @@ class RSS_Display():
     def __init__(self):
         self.root = Tk()
         self.root.title('RSS Display')
-        #self.root.geometry('500x100')
         self.root.resizable()
         self.label()
         self.menu()
@@ -22,11 +21,17 @@ class RSS_Display():
     def label(self):
         i = 1
         title_list = RSS.get_titles()
-        label = Label(self.root, text=title_list[i])
-        label.config(bg='green')
-        label.pack()
-    def open_browser(self):
-        RSS.callBack()
+        label_1 = Label(self.root, text=title_list[i])
+        label_1.pack()
+
+    def background_color(self):
+        pass
+            # bg_color = colorchooser.askcolor(title='Background painter')
+            # self.label(bg=bg_color[1])
+
+
+    def callBack(url):
+        webbrowser.open_new(url)
 
     def title_update(self):
         pass
@@ -76,10 +81,7 @@ class RSS_Display():
         window.mainloop()
 
 
-    def background_color(self):
-        bg_color = colorchooser.askcolor(title='choose color')
-        #self.label.configure(bg=bg_color[1])
-        self.root.config(bg=bg_color[1])
+
 
 
 
