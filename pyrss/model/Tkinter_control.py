@@ -6,23 +6,54 @@ import threading
 import time
 
 
+
+
+def set_interval(func, sec):
+
+    def func_wrapper():
+        set_interval(func, sec)
+
+        func()
+
+    t = threading.Timer(sec, func_wrapper)
+
+    t.start()
+
+    return t
+
+def label_update(rss_display):
+    def update():
+        rss_display.url_count += 1
+        rss_display.text.set(rss_display.title_list[rss_display.url_count])
+    return update
+
+
+
 class RSS_Display():
 
     def __init__(self):
         self.root = Tk()
         self.root.title('RSS Display')
         self.root.resizable()
+        self.url_count = 0
         self.label()
+        set_interval(label_update(self), 2)
         self.menu()
 
         self.root.mainloop()
 
 
     def label(self):
-        i = 1
-        title_list = RSS.get_titles()
-        label_1 = Label(self.root, text=title_list[i])
+        self.text = StringVar()
+        self.title_list = RSS.get_titles()
+        self.text.set(self.title_list[self.url_count])
+
+        label_1 = Label(self.root, textvariable=self.text)
         label_1.pack()
+
+
+
+
 
     def background_color(self):
         pass
