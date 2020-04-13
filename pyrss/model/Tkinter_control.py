@@ -6,10 +6,7 @@ import threading
 import time
 
 
-
-
 def set_interval(func, sec):
-
     def func_wrapper():
         set_interval(func, sec)
 
@@ -21,15 +18,16 @@ def set_interval(func, sec):
 
     return t
 
+
 def label_update(rss_display):
     def update():
         rss_display.url_count += 1
         rss_display.text.set(rss_display.title_list[rss_display.url_count])
+
     return update
 
 
-
-class RSS_Display():
+class RSS_Display:
 
     def __init__(self):
         self.root = Tk()
@@ -37,11 +35,10 @@ class RSS_Display():
         self.root.resizable()
         self.url_count = 0
         self.label()
-        set_interval(label_update(self), 2)
+        thread_id = set_interval(label_update(self), 2)
         self.menu()
-
         self.root.mainloop()
-
+        thread_id.join()
 
     def label(self):
         self.text = StringVar()
@@ -49,19 +46,17 @@ class RSS_Display():
         self.text.set(self.title_list[self.url_count])
 
         label_1 = Label(self.root, textvariable=self.text)
+        label_1.bind("<Button-1>", lambda e: self.callBack("http://rss.cnn.com/rss/cnn_topstories.rss"))
         label_1.pack()
-
-
 
 
 
     def background_color(self):
         pass
-            # bg_color = colorchooser.askcolor(title='Background painter')
-            # self.label(bg=bg_color[1])
+        # bg_color = colorchooser.askcolor(title='Background painter')
+        # self.label(bg=bg_color[1])
 
-
-    def callBack(url):
+    def callBack(self, url):
         webbrowser.open_new(url)
 
     def title_update(self):
@@ -76,6 +71,7 @@ class RSS_Display():
 
     def custom_rss_url(self):
         pass
+
         def get_input():
             input = input_entry.get()
             print(input)
@@ -90,31 +86,24 @@ class RSS_Display():
         button.grid(row=0, column=3)
         button.configure(command=window.destroy)
 
-
-
     def feed_delay(self):
-
         def get_input():
             input = input_entry.get()
             print(input)
             return input
+
         window = Tk()
         window.title('delay time')
         label1 = Label(window, text='Delay time(s)')
         label1.grid(row=0, column=0)
         input_entry = Entry(window, width=5)
         input_entry.grid(row=0, column=2)
-        button = Button(window, text= 'Enter', command=get_input)
+        button = Button(window, text='Enter', command=get_input)
         button.grid(row=0, column=3)
         return get_input()
         window.destroy
 
         window.mainloop()
-
-
-
-
-
 
     def menu(self):
         menu_bar = Menu(self.root)
@@ -129,10 +118,4 @@ class RSS_Display():
         view.add_command(label='Background Color', command=self.background_color)
 
 
-
-
-
-
-
 RSS_Display()
-
