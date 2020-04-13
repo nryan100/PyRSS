@@ -34,20 +34,4 @@ def get_titles():
 
 feed = parse_RSS('http://rss.cnn.com/rss/cnn_topstories.rss')
 
-# title = get_titles()
-# i = 0
-# print(F'number of entry: {entry_number()}')
-# while True:
-#     changeTime = 2 # maybe a def to return this so we can call it from view class (unless
-#     time.strftime("%c")
-#     try:
-#         print(f'{i}  {title[i]}')
-#         i += 1
-#         time.sleep(.5)
-#
-#         if (i == entry_number()):
-#                 i = 0
-#     except:
-#         pass
-
 
