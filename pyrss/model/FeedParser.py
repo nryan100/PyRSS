@@ -57,5 +57,3 @@ class FeedParser():
     @staticmethod
     def parseFeedFile(file):
         pass
-
-
