@@ -1,4 +1,4 @@
-from pyrss.model import RSS
+import RSS 
 from tkinter import *
 from tkinter import colorchooser
 import webbrowser
@@ -35,9 +35,12 @@ class RSS_Display:
         self.root.resizable()
         self.url_count = 0
         self.label()
-        thread_id = set_interval(label_update(self), 2)
+
+        thread_id = set_interval(label_update(self), 10)
+
         self.menu()
         self.root.mainloop()
+
         thread_id.join()
 
     def label(self):
@@ -48,7 +51,6 @@ class RSS_Display:
         label_1 = Label(self.root, textvariable=self.text)
         label_1.bind("<Button-1>", lambda e: self.callBack("http://rss.cnn.com/rss/cnn_topstories.rss"))
         label_1.pack()
-
 
 
     def background_color(self):

@@ -2,14 +2,6 @@ import feedparser
 import webbrowser
 import time
 
-
-# def __init__(self, url):
-#     self.url = url
-
-
-
-
-
 def parse_RSS(url):
     return feedparser.parse(url)
 
