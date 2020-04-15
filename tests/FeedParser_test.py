@@ -29,17 +29,24 @@ class TestParser(unittest.TestCase):
         
 
     def test_empty_source(self):
-        errored_Article = FeedParser.parseSource("",False)
-        assert errored_Article is not None
-        assert errored_Article[0] == {'date': '', 'desc': '', 'link': '', 'title': 'Source  was not found'}
+        errored_Articles = FeedParser.parseSource("",False)
+        assert errored_Articles is not None
+        assert errored_Articles[0] == {'date': '', 'desc': '', 'link': '', 'title': 'Source  was not found'}
 
-        errored_Article = FeedParser.parseSource("",True)
-        assert errored_Article is not None
-        assert errored_Article[0] == {'date': '', 'desc': '', 'link': '', 'title': 'Source  was not found'}
+        errored_Articles = FeedParser.parseSource("",True)
+        assert errored_Articles is not None
+        assert errored_Articles[0] == {'date': '', 'desc': '', 'link': '', 'title': 'Source  was not found'}
 
 
     def test_feed_url_extraction(self):
-        pass
+        articles = FeedParser.parseSource("https://rss.nytimes.com/services/xml/rss/nyt/DiningandWine.xml",False)
+        assert articles is not None
+
+        assert articles[0]["title"] is not None
+        assert articles[0]["link"] is not None
+        assert articles[0]["desc"] is not None
+        assert articles[0]["date"] is not None
+
 
     def test_makeSoup_logic(self):
         pass

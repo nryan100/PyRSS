@@ -10,9 +10,14 @@ class FeedParser():
     """
         Make a request and parse with beautifulsoup
     """
-    def makeSoup(self,url):
-        r = requests.get(str(url))
-        return BeautifulSoup(r.text,"xml")
+    def makeSoup(self, source, isFile):
+        if isFile: 
+            with open(source, encoding="utf-8") as file:
+                content = file.read()
+            return BeautifulSoup(content,"xml")
+        else:     
+            r = requests.get(str(source))
+            return BeautifulSoup(r.text,"xml")
 
     """
         Parses an xml page and extracts the following: 
@@ -21,9 +26,9 @@ class FeedParser():
         - Date
         - Description
     """
-    def parse(self,url):
+    def parse(self,source, isFile):
         try: 
-            for item in self.makeSoup(url).find_all("item"):                
+            for item in self.makeSoup(source,isFile).find_all("item"):                
                 article = {
                     "title" : item.find_all("title")[0].get_text(),
                     "link"  : item.find_all("link")[0].get_text(),
@@ -37,7 +42,7 @@ class FeedParser():
             
         if not self.articles:
             self.articles.append({
-                    "title":"URL: {} was not found".format(url),"link":"","date":"","desc": ""
+                    "title":"Source {} was not found".format(source),"link":"","date":"","desc": ""
                 })
 
 
@@ -45,9 +50,9 @@ class FeedParser():
         Parses a specific URL 
     """
     @staticmethod 
-    def parseURL(url):
+    def parseSource(source,isFile):
         fp = FeedParser()
-        fp.parse(url)
+        fp.parse(source,isFile)
         return fp.articles
 
 
