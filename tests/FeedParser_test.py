@@ -1,4 +1,5 @@
 import unittest.test
+from bs4 import BeautifulSoup
 from pyrss.model.FeedParser import FeedParser
 
 class TestParser(unittest.TestCase):
@@ -15,41 +16,59 @@ class TestParser(unittest.TestCase):
 
         # Test that items in TestFeed.xml match their expected results
         for sample in sample_Articles:
-
-            assert sample["title"] == titleExpected.format(index)
-            assert sample["link"] == linkExpected.format(index)
-            assert sample["desc"] == descExpected.format(index)
-            assert sample["date"] == dateExpected.format(index)
+            
+            self.assertEqual(sample["title"], titleExpected.format(index))
+            self.assertEqual(sample["link"], linkExpected.format(index))
+            self.assertEqual(sample["desc"], descExpected.format(index))
+            self.assertEqual(sample["date"], dateExpected.format(index))
             
             index += 1
 
     def test_article_contents(self):
         sample_Articles = FeedParser.parseSource("TestFeed.xml",True)
-        assert sample_Articles[0] ==  {'title': 'Title 1', 'link': 'https://www.item1.com', 'date': 'Date 1', 'desc': 'Description 1'}
+        self.assertEqual(sample_Articles[0], {'title': 'Title 1', 'link': 'https://www.item1.com', 'date': 'Date 1', 'desc': 'Description 1'})
         
 
     def test_empty_source(self):
         errored_Articles = FeedParser.parseSource("",False)
-        assert errored_Articles is not None
-        assert errored_Articles[0] == {'date': '', 'desc': '', 'link': '', 'title': 'Source  was not found'}
+        self.assertNotEqual(errored_Articles, None)
 
         errored_Articles = FeedParser.parseSource("",True)
-        assert errored_Articles is not None
-        assert errored_Articles[0] == {'date': '', 'desc': '', 'link': '', 'title': 'Source  was not found'}
+        self.assertNotEqual(errored_Articles, None)
 
 
     def test_feed_url_extraction(self):
         articles = FeedParser.parseSource("https://rss.nytimes.com/services/xml/rss/nyt/DiningandWine.xml",False)
-        assert articles is not None
+        self.assertNotEqual(articles, None)
 
-        assert articles[0]["title"] is not None
-        assert articles[0]["link"] is not None
-        assert articles[0]["desc"] is not None
-        assert articles[0]["date"] is not None
+        self.assertNotEqual(articles[0]["title"], None)
+        self.assertNotEqual(articles[0]["link"], None)
+        self.assertNotEqual(articles[0]["desc"], None)
+        self.assertNotEqual(articles[0]["date"], None)
 
 
-    def test_makeSoup_logic(self):
-        pass
+    def test_makeSoup_functionality(self):
+        fp = FeedParser()
+        # Tests both branches and checks that method returns BeautifuSoup object
+        self.assertIsInstance(fp.makeSoup("TestFeed.xml",True), BeautifulSoup)
+        self.assertIsInstance(fp.makeSoup("https://rss.nytimes.com/services/xml/rss/nyt/DiningandWine.xml",False), BeautifulSoup)
+        
+
+    def test_error_handeling(self):
+        # Throw file not found exception
+        broken_Articles = FeedParser.parseSource("NotAFeed.xml", True)
+        self.assertEqual(broken_Articles[0]["title"], "File 'NotAFeed.xml' was not found. Check directory & file name.")
+        # Throw invalid URL format exception
+        broken_Articles = FeedParser.parseSource("not.a.website.com", False)
+        self.assertEqual(broken_Articles[0]["title"], "Invalid URL format for 'not.a.website.com'. Check URL.")
+        # Throw an unhandeled generic exception 
+        broken_Articles = FeedParser.parseSource("\n", True)
+        self.assertEqual(broken_Articles[0]["title"], "Error in '\n', Check source.")
+        self.assertNotEqual(broken_Articles[0]["desc"], None)
+        # Ensure empty list is not returned if exception is not thrown 
+        broken_Articles = FeedParser.parseSource("https://www.google.com", False)
+        self.assertEqual(broken_Articles[0]["title"], "Source 'https://www.google.com' was not found")
+
 
     def test_parseSource(self):
         pass

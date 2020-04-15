@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
+import sys
+import threading
 
 class FeedParser():
 
@@ -15,7 +17,7 @@ class FeedParser():
             with open(source, encoding="utf-8") as file:
                 content = file.read()
             return BeautifulSoup(content,"xml")
-        else:     
+        if not isFile:     
             r = requests.get(str(source))
             return BeautifulSoup(r.text,"xml")
 
@@ -36,13 +38,26 @@ class FeedParser():
                     "desc"  : item.find_all("description")[0].get_text()
                 }
                 self.articles.append(article)
-        except: 
-            # TODO: FIX THIS!
-            pass
+        
+        except requests.exceptions.MissingSchema:
+            self.articles.append({
+                    "title": "Invalid URL format for '{}'. Check URL.".format(source),"link":"","date":"","desc": ""
+                })
+        
+        except FileNotFoundError:
+            self.articles.append({
+                    "title": "File '{}' was not found. Check directory & file name.".format(source),"link":"","date":"","desc": ""
+                })
+
+
+        except Exception as error: 
+            self.articles.append({
+                    "title": "Error in '{}', Check source.".format(source),"link":"","date":"","desc": error
+                })
             
         if not self.articles:
             self.articles.append({
-                    "title":"Source {} was not found".format(source),"link":"","date":"","desc": ""
+                    "title":"Source '{}' was not found".format(source),"link":"","date":"","desc": ""
                 })
 
 
@@ -62,3 +77,5 @@ class FeedParser():
     @staticmethod
     def parseFeedFile(file):
         pass
+
+print(FeedParser.parseSource("test.txt",True)[0])
