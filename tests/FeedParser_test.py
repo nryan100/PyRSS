@@ -24,6 +24,7 @@ class TestParser(unittest.TestCase):
             
             index += 1
 
+    
     def test_article_contents(self):
         sample_Articles = FeedParser.parseSource("TestFeed.xml",True)
         self.assertEqual(sample_Articles[0], {'title': 'Title 1', 'link': 'https://www.item1.com', 'date': 'Date 1', 'desc': 'Description 1'})
@@ -69,9 +70,6 @@ class TestParser(unittest.TestCase):
         broken_Articles = FeedParser.parseSource("https://www.google.com", False)
         self.assertEqual(broken_Articles[0]["title"], "Source 'https://www.google.com' was not found")
 
-
-    def test_parseSource(self):
-        pass
 
     def test_readFeedFile(self):
         pass

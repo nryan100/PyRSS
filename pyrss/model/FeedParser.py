@@ -5,9 +5,11 @@ import threading
 
 class FeedParser():
 
+
     def __init__(self, feed_file = None):
         self.feed_file = feed_file
         self.articles = []
+
 
     """
         Make a request and parse with beautifulsoup
@@ -17,9 +19,10 @@ class FeedParser():
             with open(source, encoding="utf-8") as file:
                 content = file.read()
             return BeautifulSoup(content,"xml")
-        if not isFile:     
+        else:     
             r = requests.get(str(source))
             return BeautifulSoup(r.text,"xml")
+
 
     """
         Parses an xml page and extracts the following: 
@@ -28,9 +31,9 @@ class FeedParser():
         - Date
         - Description
     """
-    def parse(self,source, isFile):
+    def parse(self, source, isFile):
         try: 
-            for item in self.makeSoup(source,isFile).find_all("item"):                
+            for item in self.makeSoup(source, isFile).find_all("item"):                
                 article = {
                     "title" : item.find_all("title")[0].get_text(),
                     "link"  : item.find_all("link")[0].get_text(),
@@ -48,7 +51,6 @@ class FeedParser():
             self.articles.append({
                     "title": "File '{}' was not found. Check directory & file name.".format(source),"link":"","date":"","desc": ""
                 })
-
 
         except Exception as error: 
             self.articles.append({
@@ -77,5 +79,3 @@ class FeedParser():
     @staticmethod
     def parseFeedFile(file):
         pass
-
-print(FeedParser.parseSource("test.txt",True)[0])
