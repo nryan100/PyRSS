@@ -16,7 +16,7 @@ class TestParser(unittest.TestCase):
 
         # Test that items in TestFeed.xml match their expected results
         for sample in sample_Articles:
-            
+
             self.assertEqual(sample["title"], titleExpected.format(index))
             self.assertEqual(sample["link"], linkExpected.format(index))
             self.assertEqual(sample["desc"], descExpected.format(index))
@@ -69,7 +69,3 @@ class TestParser(unittest.TestCase):
         # Ensure empty list is not returned if exception is not thrown 
         broken_Articles = FeedParser.parseSource("https://www.google.com", False)
         self.assertEqual(broken_Articles[0]["title"], "Source 'https://www.google.com' was not found")
-
-
-    def test_readFeedFile(self):
-        pass

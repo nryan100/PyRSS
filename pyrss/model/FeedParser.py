@@ -71,11 +71,3 @@ class FeedParser():
         fp = FeedParser()
         fp.parse(source,isFile)
         return fp.articles
-
-
-    """
-        Parses all feeds defined in a text file 
-    """
-    @staticmethod
-    def parseFeedFile(file):
-        pass
