@@ -4,7 +4,7 @@ import sys
 import os
  
 sys.path.append('../')
-from model.FeedParser import FeedParser
+from pyrss.model.FeedParser import FeedParser
 
 
 class RSS_Display():
@@ -77,5 +77,3 @@ class RSS_Display():
         root.mainloop()
     
 
-
-RSS_Display.run("google.com", False)
