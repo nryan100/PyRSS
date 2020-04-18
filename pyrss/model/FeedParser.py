@@ -51,11 +51,6 @@ class FeedParser():
             self.articles.append({
                     "title": "File '{}' was not found. Check directory & file name.".format(source),"link":"","date":"","desc": ""
                 })
-
-        except Exception as error: 
-            self.articles.append({
-                    "title": "Error in '{}', Check source.".format(source),"link":"","date":"","desc": error
-                })
             
         if not self.articles:
             self.articles.append({
