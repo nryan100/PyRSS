@@ -67,8 +67,8 @@ class TestParser(unittest.TestCase):
         broken_Articles = FeedParser.parseSource("not.a.website.com", False)
         self.assertEqual(broken_Articles[0]["title"], "Invalid URL format for 'not.a.website.com'. Check URL.")
         # Throw an unhandeled generic exception 
-        broken_Articles = FeedParser.parseSource("\n", True)
-        self.assertEqual(broken_Articles[0]["title"], "Error in '\n', Check source.")
+        broken_Articles = FeedParser.parseSource("*", True)
+        self.assertEqual(broken_Articles[0]["title"], "Error in '*', Check source.")
         self.assertNotEqual(broken_Articles[0]["desc"], None)
         # Ensure empty list is not returned if exception is not thrown 
         broken_Articles = FeedParser.parseSource("https://www.google.com", False)
