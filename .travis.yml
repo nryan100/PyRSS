@@ -16,4 +16,6 @@ addons:
 
 script:
   - sonar-scanner
-  - pytest
+  # Generate coverage report with pytest results
+  - coverage run -m pytest
+  - coverage html

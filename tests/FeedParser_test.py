@@ -7,6 +7,7 @@ from pyrss.model.FeedParser import FeedParser
 
 class TestParser(unittest.TestCase):
 
+    TEST_FEED = "TestFeed.xml"
 
     def test_sample_feed_file(self):
         index = 1
@@ -15,7 +16,7 @@ class TestParser(unittest.TestCase):
         descExpected = "Description {}"
         dateExpected = "Date {}"
         
-        sample_Articles = FeedParser.parseSource("TestFeed.xml",True)
+        sample_Articles = FeedParser.parseSource(self.TEST_FEED,True)
 
         # Test that items in TestFeed.xml match their expected results
         for sample in sample_Articles:
@@ -29,7 +30,7 @@ class TestParser(unittest.TestCase):
 
     
     def test_article_contents(self):
-        sample_Articles = FeedParser.parseSource("TestFeed.xml",True)
+        sample_Articles = FeedParser.parseSource(self.TEST_FEED,True)
         self.assertEqual(sample_Articles[0], {'title': 'Title 1', 'link': 'https://www.item1.com', 'date': 'Date 1', 'desc': 'Description 1'})
         
 
@@ -54,7 +55,7 @@ class TestParser(unittest.TestCase):
     def test_makeSoup_functionality(self):
         fp = FeedParser()
         # Tests both branches and checks that method returns BeautifuSoup object
-        self.assertIsInstance(fp.makeSoup("TestFeed.xml",True), BeautifulSoup)
+        self.assertIsInstance(fp.makeSoup(self.TEST_FEED,True), BeautifulSoup)
         self.assertIsInstance(fp.makeSoup("https://rss.nytimes.com/services/xml/rss/nyt/DiningandWine.xml",False), BeautifulSoup)
         
 
