@@ -1,5 +1,8 @@
 import unittest.test
 from bs4 import BeautifulSoup
+import sys
+
+sys.path.append('../')
 from pyrss.model.FeedParser import FeedParser
 
 class TestParser(unittest.TestCase):
