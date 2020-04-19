@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns:header="header">
+<channel>
+    <title>Sample</title>
+    <entry>
+        <title>Title 1</title>
+        <link>https://www.item1.com</link>
+        <summary>Description 1</summary>
+        <updated>Date 1</updated>
+    </entry>
+    <entry>
+        <title>Title 2</title>
+        <link>https://www.item2.com</link>
+        <summary>Description 2</summary>
+        <updated>Date 2</updated>
+    </entry>
+    <entry>
+        <title>Title 3</title>
+        <link>https://www.item3.com</link>
+        <summary>Description 3</summary>
+        <updated>Date 3</updated>
+    </entry>
+</channel>
+</feed>

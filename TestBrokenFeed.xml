@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:header="header">
+<channel>
+    <title>A</title>
+    <item>
+        <title>B</title>
+        <link>C</link>
+        <pubDate>D</pubDate>
+    </item>
+</channel>
+</rss>

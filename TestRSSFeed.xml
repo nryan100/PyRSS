@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:header="header">
 <channel>
+    <title>Sample</title>
     <item>
         <title>Title 1</title>
         <link>https://www.item1.com</link>

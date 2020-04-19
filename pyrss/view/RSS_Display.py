@@ -39,6 +39,7 @@ class RSS_Display():
     def iterateArticles(self):
         # Assume errored return if only one element in articles. Formatting avoided to show entirety of error message 
         if len(self.articles) == 1: 
+            self.master.title(self.articles[self.articleIndex]['fname'])
             self.label.configure(
                 text = self.articles[self.articleIndex]['title']
                 )
@@ -52,6 +53,7 @@ class RSS_Display():
             self.iterateArticles()
 
         elif len(self.articles) > 1: 
+            self.master.title(self.articles[self.articleIndex]['fname'])
             self.label.bind(
                 "<Button-1>", lambda event : webbrowser.open_new_tab(self.articles[self.articleIndex - 1]['link']
                 ))
@@ -75,4 +77,3 @@ class RSS_Display():
         root = tk.Tk()
         app = RSS_Display(root,source,isFile)
         root.mainloop()
-    

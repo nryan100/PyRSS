@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import sys
-import threading
+import time
 
 class FeedParser():
 
@@ -32,31 +32,72 @@ class FeedParser():
         - Description
     """
     def parse(self, source, isFile):
+
         try: 
-            for item in self.makeSoup(source, isFile).find_all("item"):                
-                article = {
-                    "title" : item.find_all("title")[0].get_text(),
-                    "link"  : item.find_all("link")[0].get_text(),
-                    "date"  : item.find_all("pubDate")[0].get_text(),
-                    "desc"  : item.find_all("description")[0].get_text()
-                }
-                self.articles.append(article)
-        
+            soup = self.makeSoup(source,isFile)            
+            # assumes feeds with <item> tag belong to a RSS feed
+            if len(soup.find_all("item")) > 0:
+                feedName = soup.find("title").get_text()
+                for item in soup.find_all("item"):
+                    self.appendArticle(
+                        item, "title", "link", "pubDate", "description", feedName, time.asctime( time.localtime(time.time()))
+                    )
+                    
+            # assumes feeds with <entry> tag belong to an ATOM feed
+            elif len(soup.find_all("entry")) > 0:
+                feedName = soup.find("title").get_text()
+                for item in soup.find_all("entry"):
+                    self.appendArticle(
+                        item, "title", "link", "updated", "summary", feedName, time.asctime( time.localtime(time.time()))
+                    )
+
         except requests.exceptions.MissingSchema:
             self.articles.append({
-                    "title": "Invalid URL format for '{}'. Check URL.".format(source),"link":"","date":"","desc": ""
+                    "title": "Invalid URL format for '{}'. Check URL.".format(source),"link":"","date":"","desc": "", "fname" : "Error", "ftime" : ""
                 })
         
         except FileNotFoundError:
             self.articles.append({
-                    "title": "File '{}' was not found. Check directory & file name.".format(source),"link":"","date":"","desc": ""
+                    "title": "File '{}' was not found. Check directory & file name.".format(source),"link":"","date":"","desc": "", "fname" : "Error", "ftime" : ""
+                })
+        
+        except Exception as e: 
+            self.articles.append({
+                    "title": "Source '{}' was not found. Check configuration".format(source),"link":"","date":"","desc": e, "fname" : "Error", "ftime" : ""
                 })
             
         if not self.articles:
             self.articles.append({
-                    "title":"Source '{}' was not found".format(source),"link":"","date":"","desc": ""
+                    "title":"Source '{}' was not found".format(source),"link":"","date":"","desc": "", "fname" : "Error", "ftime" : ""
                 })
 
+
+    """
+        Dictionary interface. Uses tag names for search parameters and appends entry to articles array 
+    """
+    def appendArticle(self, item, titleTag, linkTag, dateTag, descTag, feedName, fetchTime): 
+        try:
+            article = {
+                "title" : item.find(titleTag).get_text(),
+                "link"  : item.find(linkTag).get_text(),
+                "date"  : item.find(dateTag).get_text(),
+                "desc"  : item.find(descTag).get_text(),
+                "fname" : feedName, 
+                "ftime" : fetchTime
+            }
+            self.articles.append(article)
+        # If description is not found: 
+        except Exception as error: 
+            if item.find(titleTag) is not None and item.find(linkTag) is not None and item.find(dateTag) is not None: 
+                article = {
+                    "title" : item.find(titleTag).get_text(),
+                    "link"  : item.find(linkTag).get_text(),
+                    "date"  : item.find(dateTag).get_text(),
+                    "desc"  : "No description found",
+                    "fname" : feedName, 
+                    "ftime" : fetchTime
+                }
+                self.articles.append(article)
 
     """
         Parses a specific URL 
@@ -66,3 +107,7 @@ class FeedParser():
         fp = FeedParser()
         fp.parse(source,isFile)
         return fp.articles
+
+    @staticmethod
+    def parseFeedFile(source):
+        pass

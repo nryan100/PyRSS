@@ -7,33 +7,46 @@ from pyrss.model.FeedParser import FeedParser
 
 class TestParser(unittest.TestCase):
 
-    TEST_FEED = "TestFeed.xml"
 
-    def test_sample_feed_file(self):
+    def test_sample_rss_feed(self):
         index = 1
+        feedTitleExpected = "Sample"
         titleExpected = "Title {}"
         linkExpected = "https://www.item{}.com"
         descExpected = "Description {}"
         dateExpected = "Date {}"
         
-        sample_Articles = FeedParser.parseSource(self.TEST_FEED,True)
+        for item in FeedParser.parseSource("TestRSSFeed.xml",True):
+            self.assertEqual(item["title"], titleExpected.format(index))
+            self.assertEqual(item["link"], linkExpected.format(index))
+            self.assertEqual(item["desc"], descExpected.format(index))
+            self.assertEqual(item["date"], dateExpected.format(index))
+            self.assertEqual(item["fname"], feedTitleExpected)
 
-        # Test that items in TestFeed.xml match their expected results
-        for sample in sample_Articles:
-
-            self.assertEqual(sample["title"], titleExpected.format(index))
-            self.assertEqual(sample["link"], linkExpected.format(index))
-            self.assertEqual(sample["desc"], descExpected.format(index))
-            self.assertEqual(sample["date"], dateExpected.format(index))
-            
             index += 1
 
     
-    def test_article_contents(self):
-        sample_Articles = FeedParser.parseSource(self.TEST_FEED,True)
-        self.assertEqual(sample_Articles[0], {'title': 'Title 1', 'link': 'https://www.item1.com', 'date': 'Date 1', 'desc': 'Description 1'})
+    def test_sample_atom_feed(self):
+        index = 1
+        feedTitleExpected = "Sample"
+        titleExpected = "Title {}"
+        linkExpected = "https://www.item{}.com"
+        descExpected = "Description {}"
+        dateExpected = "Date {}"
         
+        for item in FeedParser.parseSource("TestAtomFeed.xml",True):
+            self.assertEqual(item["title"], titleExpected.format(index))
+            self.assertEqual(item["link"], linkExpected.format(index))
+            self.assertEqual(item["desc"], descExpected.format(index))
+            self.assertEqual(item["date"], dateExpected.format(index))
+            self.assertEqual(item["fname"], feedTitleExpected)
 
+            index += 1
+    
+
+    def test_incomplete_feed(self):
+        self.assertEqual(FeedParser.parseSource("TestBrokenFeed.xml", True)[0]['desc'], "No description found")
+        
     def test_empty_source(self):
         errored_Articles = FeedParser.parseSource("",False)
         self.assertNotEqual(errored_Articles, None)
@@ -55,7 +68,7 @@ class TestParser(unittest.TestCase):
     def test_makeSoup_functionality(self):
         fp = FeedParser()
         # Tests both branches and checks that method returns BeautifuSoup object
-        self.assertIsInstance(fp.makeSoup(self.TEST_FEED,True), BeautifulSoup)
+        self.assertIsInstance(fp.makeSoup("TestBrokenFeed.xml",True), BeautifulSoup)
         self.assertIsInstance(fp.makeSoup("https://rss.nytimes.com/services/xml/rss/nyt/DiningandWine.xml",False), BeautifulSoup)
         
 
@@ -66,6 +79,14 @@ class TestParser(unittest.TestCase):
         # Throw invalid URL format exception
         broken_Articles = FeedParser.parseSource("not.a.website.com", False)
         self.assertEqual(broken_Articles[0]["title"], "Invalid URL format for 'not.a.website.com'. Check URL.")
+        # Throw error if URL is passed as a file 
+        broken_Articles = FeedParser.parseSource("https://rss.nytimes.com/services/xml/rss/nyt/DiningandWine.xml", True)
+        self.assertEqual(broken_Articles[0]["title"], "Source 'https://rss.nytimes.com/services/xml/rss/nyt/DiningandWine.xml' was not found. Check configuration")
         # Ensure empty list is not returned if exception is not thrown 
         broken_Articles = FeedParser.parseSource("https://www.google.com", False)
         self.assertEqual(broken_Articles[0]["title"], "Source 'https://www.google.com' was not found")
+
+    
+    def test_parseFeedFile(self):
+        fp = FeedParser()
+        fp.parseFeedFile(None)
