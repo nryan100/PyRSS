@@ -61,10 +61,6 @@ class FeedParser():
                     "title": "File '{}' was not found. Check directory & file name.".format(source),"link":"","date":"","desc": "", "fname" : "Error", "ftime" : ""
                 })
         
-        except Exception as e: 
-            self.articles.append({
-                    "title": "Source '{}' was not found. Check configuration".format(source),"link":"","date":"","desc": e, "fname" : "Error", "ftime" : ""
-                })
             
         if not self.articles:
             self.articles.append({

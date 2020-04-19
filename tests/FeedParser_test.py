@@ -79,9 +79,6 @@ class TestParser(unittest.TestCase):
         # Throw invalid URL format exception
         broken_Articles = FeedParser.parseSource("not.a.website.com", False)
         self.assertEqual(broken_Articles[0]["title"], "Invalid URL format for 'not.a.website.com'. Check URL.")
-        # Throw error if URL is passed as a file 
-        broken_Articles = FeedParser.parseSource("https://rss.nytimes.com/services/xml/rss/nyt/DiningandWine.xml", True)
-        self.assertEqual(broken_Articles[0]["title"], "Source 'https://rss.nytimes.com/services/xml/rss/nyt/DiningandWine.xml' was not found. Check configuration")
         # Ensure empty list is not returned if exception is not thrown 
         broken_Articles = FeedParser.parseSource("https://www.google.com", False)
         self.assertEqual(broken_Articles[0]["title"], "Source 'https://www.google.com' was not found")
