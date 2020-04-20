@@ -3,7 +3,7 @@ import webbrowser
 import sys
 import os
  
-sys.path.append('../')
+sys.path.append(os.path.join(os.path.dirname(__file__),'../../'))
 from pyrss.model.FeedParser import FeedParser
 
 
@@ -77,3 +77,5 @@ class RSS_Display():
         root = tk.Tk()
         app = RSS_Display(root,source,isFile)
         root.mainloop()
+
+RSS_Display.run("",True)
