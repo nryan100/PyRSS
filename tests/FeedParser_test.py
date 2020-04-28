@@ -1,9 +1,13 @@
+import os
+
 import unittest.test
+import feedparser
 from bs4 import BeautifulSoup
 import sys
 
-sys.path.append('../')
+sys.path.append(os.path.join(os.path.dirname(__file__),'../../'))
 from pyrss.model.FeedParser import FeedParser
+
 
 class TestParser(unittest.TestCase):
 
