@@ -31,9 +31,13 @@ class RSS_Display():
             )
         self.label.pack()
         # Fetch feeds before iterating
-        self.articles = FeedParser.parseSource(source,isFile)
+        self.articles = []
         # Begin loop
         self.iterateArticles()
+
+
+    def generateArticles(self, source, isFile):
+        self.articles = FeedParser.parseSource(source, False, isFile)
 
 
     def iterateArticles(self):
@@ -78,4 +82,3 @@ class RSS_Display():
         app = RSS_Display(root,source,isFile)
         root.mainloop()
 
-RSS_Display.run("",True)

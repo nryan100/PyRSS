@@ -56,7 +56,7 @@
     <p id="t3" class="run"><span class="n"><a href="#t3">3</a></span><span class="t"><span class="key">import</span> <span class="nam">sys</span>&nbsp;</span><span class="r"></span></p>
     <p id="t4" class="run"><span class="n"><a href="#t4">4</a></span><span class="t"><span class="key">import</span> <span class="nam">os</span>&nbsp;</span><span class="r"></span></p>
     <p id="t5" class="pln"><span class="n"><a href="#t5">5</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t6" class="run"><span class="n"><a href="#t6">6</a></span><span class="t"><span class="nam">sys</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">append</span><span class="op">(</span><span class="str">'../'</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t6" class="run"><span class="n"><a href="#t6">6</a></span><span class="t"><span class="nam">sys</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">append</span><span class="op">(</span><span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">join</span><span class="op">(</span><span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">dirname</span><span class="op">(</span><span class="nam">__file__</span><span class="op">)</span><span class="op">,</span><span class="str">'../../'</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t7" class="run"><span class="n"><a href="#t7">7</a></span><span class="t"><span class="key">from</span> <span class="nam">pyrss</span><span class="op">.</span><span class="nam">model</span><span class="op">.</span><span class="nam">FeedParser</span> <span class="key">import</span> <span class="nam">FeedParser</span>&nbsp;</span><span class="r"></span></p>
     <p id="t8" class="pln"><span class="n"><a href="#t8">8</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t9" class="pln"><span class="n"><a href="#t9">9</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -130,12 +130,13 @@
     <p id="t77" class="mis show_mis"><span class="n"><a href="#t77">77</a></span><span class="t">        <span class="nam">root</span> <span class="op">=</span> <span class="nam">tk</span><span class="op">.</span><span class="nam">Tk</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t78" class="mis show_mis"><span class="n"><a href="#t78">78</a></span><span class="t">        <span class="nam">app</span> <span class="op">=</span> <span class="nam">RSS_Display</span><span class="op">(</span><span class="nam">root</span><span class="op">,</span><span class="nam">source</span><span class="op">,</span><span class="nam">isFile</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t79" class="mis show_mis"><span class="n"><a href="#t79">79</a></span><span class="t">        <span class="nam">root</span><span class="op">.</span><span class="nam">mainloop</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t80" class="pln"><span class="n"><a href="#t80">80</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
 </div>
 <div id="footer">
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.1</a>,
-            created at 2020-04-18 20:50
+            created at 2020-04-20 15:20
         </p>
     </div>
 </div>
