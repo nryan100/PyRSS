@@ -17,31 +17,34 @@ class RSS_Display():
     
     ALWAYS_ON_TOP = True
     
-    def __init__(self, master, source, isFile):
+    def __init__(self, master):
         self.master = master
         self.master.title("PyRSS")
         self.master.resizable(0,0)
         self.master.attributes("-topmost",self.ALWAYS_ON_TOP)
         self.bg_color = 'white'
         self.fg_color = 'black'
-        self.source = source
-        self.isFile = isFile
+
         self.articleIndex = 0
         self.label = tk.Label(
             self.master, font=("Helvetica", 10), cursor="hand2")
         self.label.pack()
         # self.label(bg_color='withe')
-
         # Fetch feeds before iterating
-        self.articles = FeedParser.parseSource(source,isFile)
+        self.articles = []
+        self.source = ""
+        self.isFile = ""
         # Begin loop
-        self.iterateArticles()
         self.menu()
 
 
+    def generateArticles(self, source, isFile):
+        self.soruce = source
+        self.isFile = isFile
+        self.articles = FeedParser.parseSource(source, isFile)
+
+
     def iterateArticles(self):
-
-
         # Assume errored return if only one element in articles. Formatting avoided to show entirety of error message 
         if len(self.articles) == 1: 
             self.master.title(self.articles[self.articleIndex]['fname'])
@@ -49,12 +52,12 @@ class RSS_Display():
                 text = self.articles[self.articleIndex]['title'], bg='red'
                 )
             self.articleIndex = 0
-            self.articles = FeedParser.parseSource(self.source, self.isFile)
+            self.generateArticles(self.source, self.isFile)
             self.label.after(30000, self.iterateArticles)
         
         if self.articleIndex == len(self.articles):
             self.articleIndex = 0
-            self.articles = FeedParser.parseSource(self.source, self.isFile)
+            self.generateArticles(self.source, self.isFile)
             self.iterateArticles()
 
         elif len(self.articles) > 1: 
@@ -80,7 +83,9 @@ class RSS_Display():
     @staticmethod    
     def run(source,isFile):
         root = tk.Tk()
-        app = RSS_Display(root,source,isFile)
+        app = RSS_Display(root)
+        app.generateArticles(source, isFile)
+        app.iterateArticles()
         root.mainloop()
 
 
@@ -122,12 +127,3 @@ class RSS_Display():
 
 
 RSS_Display.run("http://rss.cnn.com/rss/cnn_topstories.rss",False)
-
-
-
-
-
-
-
-
-
