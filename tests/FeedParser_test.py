@@ -1,7 +1,6 @@
 import os
 
 import unittest.test
-import feedparser
 from bs4 import BeautifulSoup
 import sys
 

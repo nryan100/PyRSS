@@ -35,6 +35,7 @@ class RSS_Display():
         # Fetch feeds before iterating
         self.articles = []
         # Begin loop
+        # Excluding
         #self.menu()
 
 
@@ -122,11 +123,7 @@ class RSS_Display():
         view.add_command(label = 'Cycle Delay', command=self.cycle_delay)
 
 
-
-
-
-
-RSS_Display.run("https://rss.nytimes.com/services/xml/rss/nyt/Americas.xml",False)
+#RSS_Display.run("https://rss.nytimes.com/services/xml/rss/nyt/Americas.xml",False)
 
 
 
