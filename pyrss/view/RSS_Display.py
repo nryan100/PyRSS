@@ -17,26 +17,27 @@ class RSS_Display():
     
     ALWAYS_ON_TOP = True
     
-    def __init__(self, master):
+    def __init__(self, master = None):
+
         self.master = master
-        self.master.title("PyRSS")
-        self.master.resizable(0,0)
-        self.master.attributes("-topmost",self.ALWAYS_ON_TOP)
-        self.bg_color = 'white'
-        self.fg_color = 'black'
+        self.draw()
+
         self.source = ""
         self.isFile = ""
         self.articleIndex = 0
-        self.label = tk.Label(
-            self.master, font=("Helvetica", 10), cursor="hand2")
-        self.label.pack()
-        # self.label(bg_color='withe')
-
-        # Fetch feeds before iterating
         self.articles = []
-        # Begin loop
-        # Excluding
-        #self.menu()
+
+
+    def draw(self):
+        if self.master is not None: 
+            self.master.title("PyRSS")
+            self.master.resizable(0,0)
+            self.master.attributes("-topmost",self.ALWAYS_ON_TOP)
+            self.bg_color = 'white'
+            self.fg_color = 'black'
+            self.label = tk.Label(
+            self.master, font=("Helvetica", 10), cursor="hand2")
+            self.label.pack()
 
 
     def generateArticles(self, source, isFile):
@@ -46,6 +47,7 @@ class RSS_Display():
 
 
     def iterateArticles(self):
+        
         # Assume errored return if only one element in articles. Formatting avoided to show entirety of error message 
         if len(self.articles) == 1: 
             self.master.title(self.articles[self.articleIndex]['fname'])
@@ -90,46 +92,37 @@ class RSS_Display():
         root.mainloop()
 
 
-    def backGround_color(self):
-        bg_color1 = tk.colorchooser.askcolor(title='Background color selector')
-        self.bg_color = bg_color1[1]
-        self.label.configure(
-            text=self.cutText(self.articles[self.articleIndex]['title'], self.CUT_AT
-                              ), bg=self.bg_color)
+    #def backGround_color(self):
+    #    bg_color1 = tk.colorchooser.askcolor(title='Background color selector')
+    #    self.bg_color = bg_color1[1]
+    #    self.label.configure(
+    #        text=self.cutText(self.articles[self.articleIndex]['title'], self.CUT_AT
+    #                         ), bg=self.bg_color)
 
 
-    def font_color(self):
-        fnt_color = tk.colorchooser.askcolor(title='Background color selector')
-        self.fg_color = fnt_color[1]
-        self.label.configure(
-            text=self.cutText(self.articles[self.articleIndex]['title'], self.CUT_AT
-                              ), fg=self.fg_color)
+    #def font_color(self):
+    #    fnt_color = tk.colorchooser.askcolor(title='Background color selector')
+    #    self.fg_color = fnt_color[1]
+    #    self.label.configure(
+    #        text=self.cutText(self.articles[self.articleIndex]['title'], self.CUT_AT
+    #                          ), fg=self.fg_color)
 
-    def cycle_delay(self):
-            pass
+    #def cycle_delay(self):
+    #        pass
 
-    def menu(self):
-        menu_bar = tk.Menu(self.master)
-        self.master.config(menu=menu_bar)
+    #def menu(self):
+    #    menu_bar = tk.Menu(self.master)
+    #    self.master.config(menu=menu_bar)
 
-        file = tk.Menu(menu_bar)
-        menu_bar.add_cascade(label= 'File', menu=file)
-        file.add_command(label='Exit', command= self.master.quit)
+    #    file = tk.Menu(menu_bar)
+    #    menu_bar.add_cascade(label= 'File', menu=file)
+    #    file.add_command(label='Exit', command= self.master.quit)
 
-        view = tk.Menu(menu_bar)
-        menu_bar.add_cascade(label='view', menu=view)
-        view.add_command(label= 'Background Color', command=self.backGround_color)
-        view.add_command(label= 'Font Color', command=self.font_color)
-        view.add_command(label = 'Cycle Delay', command=self.cycle_delay)
-
-
-#RSS_Display.run("https://rss.nytimes.com/services/xml/rss/nyt/Americas.xml",False)
+    #    view = tk.Menu(menu_bar)
+    #    menu_bar.add_cascade(label='view', menu=view)
+    #    view.add_command(label= 'Background Color', command=self.backGround_color)
+    #    view.add_command(label= 'Font Color', command=self.font_color)
+    #    view.add_command(label = 'Cycle Delay', command=self.cycle_delay)
 
 
-
-
-
-
-
-
-
+#RSS_Display.run("TestRSSFeed.xml",True)
