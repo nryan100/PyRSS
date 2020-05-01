@@ -22,3 +22,4 @@ class RSS_Display_test(unittest.TestCase):
             # Testing with string at limit
         result4 = RSS_Display.cutText(testString, testStringLength)
         self.assertEqual(len(result4), testStringLength)
+
