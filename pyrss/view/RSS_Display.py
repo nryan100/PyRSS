@@ -17,15 +17,15 @@ class RSS_Display():
     
     ALWAYS_ON_TOP = True
     
-    def __init__(self, master, source, isFile):
+    def __init__(self, master):
         self.master = master
         self.master.title("PyRSS")
         self.master.resizable(0,0)
         self.master.attributes("-topmost",self.ALWAYS_ON_TOP)
         self.bg_color = 'white'
         self.fg_color = 'black'
-        self.source = source
-        self.isFile = isFile
+        self.source = ""
+        self.isFile = ""
         self.articleIndex = 0
         self.label = tk.Label(
             self.master, font=("Helvetica", 10), cursor="hand2")
@@ -33,15 +33,18 @@ class RSS_Display():
         # self.label(bg_color='withe')
 
         # Fetch feeds before iterating
-        self.articles = FeedParser.parseSource(source,isFile)
+        self.articles = []
         # Begin loop
-        self.iterateArticles()
-        self.menu()
+        #self.menu()
+
+
+    def generateArticles(self, source, isFile):
+        self.source = source
+        self.isFile = isFile
+        self.articles = FeedParser.parseSource(source,isFile)
 
 
     def iterateArticles(self):
-
-
         # Assume errored return if only one element in articles. Formatting avoided to show entirety of error message 
         if len(self.articles) == 1: 
             self.master.title(self.articles[self.articleIndex]['fname'])
@@ -80,7 +83,9 @@ class RSS_Display():
     @staticmethod    
     def run(source,isFile):
         root = tk.Tk()
-        app = RSS_Display(root,source,isFile)
+        app = RSS_Display(root)
+        app.generateArticles(source,isFile)
+        app.iterateArticles()
         root.mainloop()
 
 
@@ -121,7 +126,7 @@ class RSS_Display():
 
 
 
-RSS_Display.run("http://rss.cnn.com/rss/cnn_topstories.rss",False)
+RSS_Display.run("https://rss.nytimes.com/services/xml/rss/nyt/Americas.xml",False)
 
 
 

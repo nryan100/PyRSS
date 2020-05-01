@@ -17,7 +17,6 @@ class RSS_Display_test(unittest.TestCase):
         self.assertEqual(len(result2), testStringLength)
             # Testing with string above the limit
         result3 = RSS_Display.cutText(testString, testStringLength -1)
-        print(result3)
         self.assertEqual(len(result3), testStringLength - 1 + 3)
             # Testing with string at limit
         result4 = RSS_Display.cutText(testString, testStringLength)
