@@ -84,9 +84,9 @@ class Application(tk.Frame):
         print("Hi Team 4!")
 
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = Application(master=root)
-    app.mainloop()
+#if __name__ == "__main__":
+ #   root = tk.Tk()
+  #  app = Application(master=root)
+  #  app.mainloop()
 
 
