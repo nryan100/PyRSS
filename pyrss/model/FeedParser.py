@@ -6,10 +6,8 @@ import time
 class FeedParser():
 
 
-    def __init__(self, feed_file = None):
-        self.feed_file = feed_file
+    def __init__(self, feed_file):
         self.articles = []
-
 
 
     def makeSoup(self, source, isFile):
