@@ -12,6 +12,7 @@ class TestParser(unittest.TestCase):
 
 
     def test_sample_rss_feed(self):
+        """ Tests FeedParser.parse() functionality """
         index = 1
         feedTitleExpected = "Sample"
         titleExpected = "Title {}"
@@ -30,6 +31,7 @@ class TestParser(unittest.TestCase):
 
     
     def test_sample_atom_feed(self):
+        """ Tests atom feed handling """
         index = 1
         feedTitleExpected = "Sample"
         titleExpected = "Title {}"
@@ -48,9 +50,11 @@ class TestParser(unittest.TestCase):
     
 
     def test_incomplete_feed(self):
+        """ Tests error handling """
         self.assertEqual(FeedParser.parseSource("TestBrokenFeed.xml", True)[0]['desc'], "No description found")
         
     def test_empty_source(self):
+        """ Tests error handling """
         errored_Articles = FeedParser.parseSource("",False)
         self.assertNotEqual(errored_Articles, None)
 
@@ -59,6 +63,7 @@ class TestParser(unittest.TestCase):
 
 
     def test_feed_url_extraction(self):
+        """ Tests RSS feed URL dictionary entries """
         articles = FeedParser.parseSource("https://rss.nytimes.com/services/xml/rss/nyt/DiningandWine.xml",False)
         self.assertNotEqual(articles, None)
 
@@ -69,13 +74,15 @@ class TestParser(unittest.TestCase):
 
 
     def test_makeSoup_functionality(self):
+        """ Tests both branches in FeedParser.makeSoup """
         fp = FeedParser()
         # Tests both branches and checks that method returns BeautifuSoup object
         self.assertIsInstance(fp.makeSoup("TestBrokenFeed.xml",True), BeautifulSoup)
         self.assertIsInstance(fp.makeSoup("https://rss.nytimes.com/services/xml/rss/nyt/DiningandWine.xml",False), BeautifulSoup)
         
 
-    def test_error_handeling(self):
+    def test_error_handling(self):
+        """ Tests all exception branches """
         # Throw file not found exception
         broken_Articles = FeedParser.parseSource("NotAFeed.xml", True)
         self.assertEqual(broken_Articles[0]["title"], "File 'NotAFeed.xml' was not found. Check directory & file name.")
@@ -85,8 +92,3 @@ class TestParser(unittest.TestCase):
         # Ensure empty list is not returned if exception is not thrown 
         broken_Articles = FeedParser.parseSource("https://www.google.com", False)
         self.assertEqual(broken_Articles[0]["title"], "Source 'https://www.google.com' was not found")
-
-    
-    def test_parseFeedFile(self):
-        fp = FeedParser()
-        fp.parseFeedFile(None)

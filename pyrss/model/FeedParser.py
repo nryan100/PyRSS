@@ -6,7 +6,7 @@ import time
 class FeedParser():
 
 
-    def __init__(self, feed_file):
+    def __init__(self):
         self.articles = []
 
 
