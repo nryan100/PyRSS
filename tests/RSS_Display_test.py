@@ -60,4 +60,32 @@ class RSS_Display_test(unittest.TestCase):
         rd.generateArticles("TestRSSFeed.xml", True)
         self.assertIsNotNone(rd.articles)
         self.assertEqual(rd.articles[0]["title"], "Title 1")
+        
+        
+class Application(tkinter.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.master = master
+        self.pack()
+        self.create_widgets()
+
+    def create_widgets(self):
+        hello_team = tkinter.Button(self)
+        hello_team["text"] = "Hello Team 4\n(click me)"
+        hello_team["command"] = self.say_hi
+        hello_team.pack(side="top")
+
+        quit = tkinter.Button(self, text="QUIT", fg="green", \
+                              command=self.master.destroy)
+        quit.pack(side="bottom")
+
+    def say_hi(self):
+        print("Hi Team 4!")
+
+
+if __name__ == "__main__":
+    root = tkinter.Tk()
+    app = Application(master=root)
+    app.mainloop()
+
 
