@@ -6,10 +6,8 @@ from pyrss.view.RSS_Display import RSS_Display
 
 class RSS_Display_test(unittest.TestCase):
 
-    def test_case(self):
-        self.assertEqual(1,1)
-
     def test_cutText(self):
+        """ Tests RSS_Display.cutText() functionality and return values """
         testString = "How are you?"
         testStringLength = len(testString)
             # Testing an empty String
@@ -27,6 +25,7 @@ class RSS_Display_test(unittest.TestCase):
 
 
     def test_iterateArticles(self):
+        """ Tests RSS_Display.iterateArticles() functionality """
         with patch("pyrss.view.RSS_Display") as display: 
             root = tk.Tk()
             app = RSS_Display(root)
@@ -47,6 +46,7 @@ class RSS_Display_test(unittest.TestCase):
 
 
     def test_run(self):
+        """ Tests RSS_Display instantiation using mocking """
         with patch("pyrss.view.RSS_Display") as display: 
             root = tk.Tk()
             app = RSS_Display(root)
@@ -56,13 +56,14 @@ class RSS_Display_test(unittest.TestCase):
 
 
     def test_generateArticles(self):
+        """ Tests RSS_Display.generateArticles() testing return values and functionality """
         rd = RSS_Display()
         rd.generateArticles("TestRSSFeed.xml", True)
         self.assertIsNotNone(rd.articles)
         self.assertEqual(rd.articles[0]["title"], "Title 1")
         
         
-class Application(tkinter.Frame):
+class Application(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
@@ -70,12 +71,12 @@ class Application(tkinter.Frame):
         self.create_widgets()
 
     def create_widgets(self):
-        hello_team = tkinter.Button(self)
+        hello_team = tk.Button(self)
         hello_team["text"] = "Hello Team 4\n(click me)"
         hello_team["command"] = self.say_hi
         hello_team.pack(side="top")
 
-        quit = tkinter.Button(self, text="QUIT", fg="green", \
+        quit = tk.Button(self, text="QUIT", fg="green", \
                               command=self.master.destroy)
         quit.pack(side="bottom")
 
@@ -84,7 +85,7 @@ class Application(tkinter.Frame):
 
 
 if __name__ == "__main__":
-    root = tkinter.Tk()
+    root = tk.Tk()
     app = Application(master=root)
     app.mainloop()
 

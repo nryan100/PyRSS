@@ -11,10 +11,9 @@ class FeedParser():
         self.articles = []
 
 
-    """
-        Make a request and parse with beautifulsoup
-    """
+
     def makeSoup(self, source, isFile):
+        """ Return BeautifulSoup instance from either a .xml file or valid feed URL """
         if isFile: 
             with open(source, encoding="utf-8") as file:
                 content = file.read()
@@ -24,15 +23,17 @@ class FeedParser():
             return BeautifulSoup(r.text,"xml")
 
 
-    """
-        Parses an xml page and extracts the following: 
-        - Title
-        - Link
-        - Date
-        - Description
-    """
     def parse(self, source, isFile):
-
+        """ Parses an xml page and extracts the following, appending the 
+            information into an array of dictionaries. Each dictionary 
+            contains the following information: 
+            - Title
+            - Link
+            - Date 
+            - Description 
+            - Name of the Feed
+            - Timestamp of when the feed was fetched
+            """
         try: 
             soup = self.makeSoup(source,isFile)            
             # assumes feeds with <item> tag belong to a RSS feed
@@ -68,10 +69,8 @@ class FeedParser():
                 })
 
 
-    """
-        Dictionary interface. Uses tag names for search parameters and appends entry to articles array 
-    """
     def appendArticle(self, item, titleTag, linkTag, dateTag, descTag, feedName, fetchTime): 
+        """ Dictionary interface. Uses tag names for search parameters and appends entry to the article array """
         try:
             article = {
                 "title" : item.find(titleTag).get_text(),
@@ -95,15 +94,10 @@ class FeedParser():
                 }
                 self.articles.append(article)
 
-    """
-        Parses a specific URL 
-    """
+
     @staticmethod 
     def parseSource(source,isFile):
+        """ Instantiates FeedParser and parses a specific source """
         fp = FeedParser()
         fp.parse(source,isFile)
         return fp.articles
-
-    @staticmethod
-    def parseFeedFile(source):
-        pass

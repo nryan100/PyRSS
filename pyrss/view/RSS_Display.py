@@ -9,19 +9,21 @@ from pyrss.model.FeedParser import FeedParser
 
 
 class RSS_Display():
-
-    # Time delay between each feed
-    FEED_DELAY = 15000
-    # Cut text at x characters
-    CUT_AT = 80 
     
+    FEED_DELAY = 15000 
+    CUT_AT = 80 
     ALWAYS_ON_TOP = True
     
     def __init__(self, master = None):
-
+        """ Instantiates RSS_Display 
+            
+            Arguments:
+            master -- tk.Tk() instance (default None)
+            """
+        
         self.master = master
         self.draw()
-
+        
         self.source = ""
         self.isFile = ""
         self.articleIndex = 0
@@ -29,6 +31,7 @@ class RSS_Display():
 
 
     def draw(self):
+        """ Instantiates tkinter frame and it's elements """
         if self.master is not None: 
             self.master.title("PyRSS")
             self.master.resizable(0,0)
@@ -41,13 +44,15 @@ class RSS_Display():
 
 
     def generateArticles(self, source, isFile):
+        """ Generates articles using FeedParser """
         self.source = source
         self.isFile = isFile
         self.articles = FeedParser.parseSource(source,isFile)
 
 
     def iterateArticles(self):
-        
+        """ Main functionality. Iterates and updates display label through 
+            article array generated from FeedParser."""
         # Assume errored return if only one element in articles. Formatting avoided to show entirety of error message 
         if len(self.articles) == 1: 
             self.master.title(self.articles[self.articleIndex]['fname'])
@@ -77,6 +82,12 @@ class RSS_Display():
     
     @staticmethod
     def cutText(text,limit):
+        """ Formats text if len(text) > limit and appends an ellipsis 
+
+            Arguments: 
+            text -- String to be formatted
+            limit -- String's size capacity
+            """
         if len(text) > limit: 
             return text[:limit] + "..."
         else: 
@@ -85,6 +96,12 @@ class RSS_Display():
 
     @staticmethod    
     def run(source,isFile):
+        """ Creates a new instance of RSS_Display
+
+        Arguments: 
+        source -- Source of feed. Can be either a .xml file or URL
+        isFile -- Defines a file. False for URL, True for a .xml file
+        """
         root = tk.Tk()
         app = RSS_Display(root)
         app.generateArticles(source,isFile)
@@ -123,6 +140,3 @@ class RSS_Display():
     #    view.add_command(label= 'Background Color', command=self.backGround_color)
     #    view.add_command(label= 'Font Color', command=self.font_color)
     #    view.add_command(label = 'Cycle Delay', command=self.cycle_delay)
-
-
-#RSS_Display.run("TestRSSFeed.xml",True)
